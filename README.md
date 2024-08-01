@@ -2,8 +2,11 @@
 
 Small and simple software for plotting data from serial port in realtime.
 
-![SerialPlot v0.4 Screenshot](http://i.imgur.com/Wb53LRt.png)
+![SerialPlot v0.4 Screenshot](https://i-blog.csdnimg.cn/direct/abc1430493c7461db1aa570231d0f858.png)
 
+![SerialPlot v0.4 Screenshot](https://i-blog.csdnimg.cn/direct/e5a1e82b1b5a44c6acef6d3480b48e31.png)
+
+![SerialPlot v0.4 Screenshot](https://i-blog.csdnimg.cn/direct/6894e45478a94d35bd7bcdcf6b433f08.png)
 ## Features
 
 * Reading data from serial port
@@ -26,8 +29,8 @@ https://hackaday.io/project/5334-serialplot-realtime-plotting-software
 
 ## Dependencies
 
-- Qt 5, including SerialPort module
-- Qwt 6.1
+- Qt 5.14.2, including SerialPort module
+- Qwt 6.1.4
 
 ## Building
 
@@ -65,9 +68,9 @@ plotting widgets for SerialPlot. You have 3 different options for Qwt.
 
 You can use Mercurial to download SerialPlot source code. Or you can
 download it from here:
-https://hg.sr.ht/~hyozd/serialplot/
+https://github.com/any2fox/serialplot
 
-    hg clone https://hg.sr.ht/~hyozd/serialplot/
+    hg clone https://github.com/any2fox/serialplot
     cd serialplot
     mkdir build && cd build
     cmake ..
