@@ -16,7 +16,8 @@ Small and simple software for plotting data from serial port in realtime.
 * Synchronized multi channel plotting
 * Define and send commands to the device in ASCII or binary format
 * Take snapshots of the current waveform and save to CSV file
-
+* Ignore any header bytes
+* Command Mixed Interval Sending
 See
 [hackaday.io](https://hackaday.io/project/5334-serialplot-realtime-plotting-software)
 page for [screenshots](https://hackaday.io/project/5334/gallery).
