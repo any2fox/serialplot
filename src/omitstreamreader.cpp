@@ -208,20 +208,28 @@ void OmitStreamReader::loadSettings(QSettings* settings)
 {
     _settingsWidget.loadSettings(settings);
 }
+unsigned dataLenght;
 void OmitStreamReader::into_data_head(){
     unsigned packageSize = sampleSize * _numChannels;
     unsigned dataLenght;
     dataLenght = Read_Buff.length();
     if(dataLenght == 0) return;
-
-    if(_numOmitByte <= dataLenght - packageSize){
-        Read_Buff = Read_Buff.right(dataLenght - _numOmitByte);
-        dataLenght -= _numOmitByte;
+    qDebug() << "data:" << Read_Buff.toHex();
+    if(dataLenght >= packageSize){
+        if(_numOmitByte <= dataLenght - packageSize){
+            Read_Buff = Read_Buff.right(dataLenght - _numOmitByte);
+            dataLenght -= _numOmitByte;
+        }else{
+            qCritical() << "Omit byte number" << _numOmitByte << "too large!";
+//            Read_Buff.clear();
+            return;
+        }
     }else{
-        qCritical() << "Omit Byte Number" << _numOmitByte << "Too Large!";
-        Read_Buff.clear();
+        qCritical() << "Data lenght" << dataLenght << "too few!";
+//        Read_Buff.clear();
         return;
     }
+
     unsigned numOfPackagesToRead =
         (dataLenght - (dataLenght % packageSize)) / packageSize;
     // actual reading

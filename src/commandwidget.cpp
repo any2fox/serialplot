@@ -24,21 +24,21 @@
 #include <QRegExpValidator>
 #include <QtDebug>
 #include <QIcon>
-
+#include "mainwindow.h"
+#include "commandpanel.h"
 CommandWidget::CommandWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CommandWidget),
     _sendAction(this)
 {
     ui->setupUi(this);
-
     //定时器单发模式
     _autoSendtimer.setSingleShot(true);
 
     //定时器1毫秒
     _autoSendtimer.stop();
 
-    connect(&_autoSendtimer,&QTimer::timeout,this,&CommandWidget::onSendClicked);
+    connect(&_autoSendtimer,&QTimer::timeout,this,&CommandWidget::AutoSendClicked);
 
     connect(ui->spNumOfAutoSendTimer_ms, SELECT<int>::OVERLOAD_OF(&QSpinBox::valueChanged),
             [this](int value)
@@ -54,10 +54,19 @@ CommandWidget::CommandWidget(QWidget *parent) :
                 this->_sendAction.setText(text);
             });
     connect(&_sendAction, &QAction::triggered, this, &CommandWidget::onSendClicked);
+
     connect(ui->rbAutoSend, &QRadioButton::toggled, [this](bool checked)
             {
-                if (checked) this->onSendClicked();
+                if (checked){
+                    _offAutoSendRb = false;
+                    this->AutoSendClicked();
+                }
             });
+    connect(this, SIGNAL(offAutoSendRb()), this, SLOT( offAutoSendRb()));
+//    connect(ui->rbAutoSend, &QRadioButton::toggled, [this](bool checked)
+//            {
+//                if (checked) this->onSendClicked();
+//            });
 }
 
 CommandWidget::~CommandWidget()
@@ -71,10 +80,10 @@ void CommandWidget::onDeleteClicked()
 {
     this->deleteLater();
 }
-
-void CommandWidget::onSendClicked()
+void CommandWidget::AutoSendClicked()
 {
     auto command = ui->leCommand->text();
+
     _autoSendtimer.setInterval(ui->spNumOfAutoSendTimer_ms->value());
     if (command.isEmpty())
     {
@@ -105,6 +114,62 @@ void CommandWidget::onSendClicked()
             return;
         }
 //        qDebug() << "Sending HEX:" << command;
+        //如果勾选
+        if(ui->rbAutoSend->isChecked()){
+            //如果未开启串口
+            if(_offAutoSendRb){
+                _offAutoSendRb = false;
+                ui->rbAutoSend->toggle();
+                _autoSendtimer.stop();
+            }
+            //如果开启串口
+            else{
+                //发送数据
+                emit sendCommand(QByteArray::fromHex(command.toLatin1()));
+            }
+        }
+    }
+    if(ui->rbAutoSend->isChecked()){
+        _autoSendtimer.start();
+    }else{
+        _autoSendtimer.stop();
+    }
+}
+void CommandWidget::onSendClicked()
+{
+    auto command = ui->leCommand->text();
+
+    _autoSendtimer.setInterval(ui->spNumOfAutoSendTimer_ms->value());
+    if (command.isEmpty())
+    {
+        qWarning() << "Enter a command to send!";
+        ui->leCommand->setFocus(Qt::OtherFocusReason);
+        emit focusRequested();
+        _autoSendtimer.stop();
+        return;
+    }
+
+    if (isASCIIMode())
+    {
+        qDebug() << "Sending " << name() << ":" << command;
+        emit sendCommand(ui->leCommand->unEscapedText().toLatin1());
+    }
+    else // hex mode
+    {
+        command = command.remove(' ');
+        // check if nibbles are missing
+        if (command.size() % 2 == 1)
+        {
+            qWarning() << "HEX command is missing a nibble at the end!";
+            ui->leCommand->setFocus(Qt::OtherFocusReason);
+            // highlight the byte that is missing a nibble (last byte obviously)
+            int textSize = ui->leCommand->text().size();
+            ui->leCommand->setSelection(textSize-1, textSize);
+            _autoSendtimer.stop();
+            return;
+        }
+//        qDebug() << "Sending HEX:" << command;
+        //发送数据
         emit sendCommand(QByteArray::fromHex(command.toLatin1()));
     }
     if(ui->rbAutoSend->isChecked()){
@@ -164,3 +229,5 @@ void CommandWidget::setCommandText(QString str)
     ui->leCommand->selectAll();
     ui->leCommand->insert(str);
 }
+
+

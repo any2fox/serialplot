@@ -23,7 +23,7 @@
 #include "commandpanel.h"
 #include "ui_commandpanel.h"
 #include "setting_defines.h"
-
+bool _offAutoSendRb;
 CommandPanel::CommandPanel(QSerialPort* port, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CommandPanel),
@@ -61,7 +61,6 @@ CommandWidget* CommandPanel::newCommand()
     connect(command, &CommandWidget::sendCommand, this, &CommandPanel::sendCommand);
     connect(command, &CommandWidget::focusRequested, this, &CommandPanel::focusRequested);
     _menu.addAction(command->sendAction());
-
     // add to command list and remove on destroy
     commands << command;
     connect(command, &QObject::destroyed, [this](QObject* obj)
@@ -89,6 +88,7 @@ void CommandPanel::sendCommand(QByteArray command)
     if (!serialPort->isOpen())
     {
         qCritical() << "Port is not open!";
+        _offAutoSendRb = true;
         return;
     }
 

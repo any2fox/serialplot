@@ -29,7 +29,7 @@
 #include <QSettings>
 
 #include "commandwidget.h"
-
+extern bool _offAutoSendRb;
 namespace Ui {
 class CommandPanel;
 }
@@ -41,7 +41,7 @@ class CommandPanel : public QWidget
 public:
     explicit CommandPanel(QSerialPort* port, QWidget *parent = 0);
     ~CommandPanel();
-
+    QSerialPort* serialPort;
     QMenu* menu();
     /// Action for creating a new command.
     QAction* newCommandAction();
@@ -58,7 +58,7 @@ signals:
 
 private:
     Ui::CommandPanel *ui;
-    QSerialPort* serialPort;
+
     QMenu _menu;
     QAction _newCommandAction;
     QList<CommandWidget*> commands;
@@ -67,7 +67,7 @@ private:
     void reAssignShortcuts();
 
     unsigned command_name_counter;
-
+    unsigned PortIsNotopen;
 private slots:
     CommandWidget* newCommand();
     void sendCommand(QByteArray command);

@@ -24,6 +24,7 @@
 #include <QByteArray>
 #include <QAction>
 #include <QTimer>
+
 namespace Ui {
 class CommandWidget;
 }
@@ -49,7 +50,6 @@ public:
     QString commandText();
     /// Set command data as text. Text is validated according to current mode.
     void setCommandText(QString str);
-
 signals:
     /// emitted when delete button is clicked
     void deleteRequested(CommandWidget* thisWidget);
@@ -65,6 +65,7 @@ signals:
     /// emitted when user tries to send an empty command
     void focusRequested();
     void spNumOfAutoSendTimer_ms(unsigned);
+
 private:
     Ui::CommandWidget *ui;
     QAction _sendAction;
@@ -73,7 +74,9 @@ private:
 private slots:
     void onDeleteClicked();
     void onSendClicked();
+    void AutoSendClicked();
     void onASCIIToggled(bool checked);
+
 };
 
 #endif // COMMANDWIDGET_H
