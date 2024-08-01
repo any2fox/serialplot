@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SnapshotView</class>
+ <widget class="QMainWindow" name="SnapshotView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>544</width>
+    <height>449</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QWidget" name="plotArea" native="true"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>544</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuSnapshot">
+    <property name="title">
+     <string>&amp;Snapshot</string>
+    </property>
+    <addaction name="actionRename"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionExportSvg"/>
+    <addaction name="actionClose"/>
+   </widget>
+   <addaction name="menuSnapshot"/>
+  </widget>
+  <action name="actionSave">
+   <property name="text">
+    <string>&amp;Save as CSV</string>
+   </property>
+   <property name="toolTip">
+    <string>Save snapshot as CSV file</string>
+   </property>
+  </action>
+  <action name="actionRename">
+   <property name="text">
+    <string>&amp;Rename</string>
+   </property>
+   <property name="toolTip">
+    <string>Rename this snapshot</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>&amp;Close</string>
+   </property>
+   <property name="toolTip">
+    <string>Close Window</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionExportSvg">
+   <property name="text">
+    <string>E&amp;xport SVG</string>
+   </property>
+   <property name="toolTip">
+    <string>Export snapshot as SVG</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionClose</sender>
+   <signal>triggered()</signal>
+   <receiver>SnapshotView</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>224</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
