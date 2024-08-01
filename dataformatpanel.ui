@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DataFormatPanel</class>
+ <widget class="QWidget" name="DataFormatPanel">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>607</width>
+    <height>181</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Data Format</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <layout class="QVBoxLayout" name="vlRadioButtons">
+     <item>
+      <widget class="QRadioButton" name="rbBinary">
+       <property name="toolTip">
+        <string>Data is sent as consecutive samples in binary form. Syncing can be a problem.</string>
+       </property>
+       <property name="text">
+        <string>Simple Binary</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="rbAscii">
+       <property name="toolTip">
+        <string>Data is sent in the form of ASCII text as comma seperated values. Easy to implement.</string>
+       </property>
+       <property name="text">
+        <string>ASCII</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="rbFramed">
+       <property name="toolTip">
+        <string>Define a custom binary frame. Powerful.</string>
+       </property>
+       <property name="text">
+        <string>Custom Frame</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="rbOmit">
+       <property name="toolTip">
+        <string>Define a custom omit frame.</string>
+       </property>
+       <property name="text">
+        <string>Omit Frame</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
