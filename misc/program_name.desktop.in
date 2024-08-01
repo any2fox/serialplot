@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=@PROGRAM_DISPLAY_NAME@
+Comment=Small and simple software for plotting data from serial port
+Icon=@PROGRAM_NAME@
+Exec=@PROGRAM_NAME@
+Terminal=false
+Type=Application
+Categories=Development;Electronics;
